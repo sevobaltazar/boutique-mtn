@@ -2,117 +2,288 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Boutique MTN</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Boutique avec Paiement MTN</title>
   <style>
+    * { box-sizing: border-box; }
+
     body {
       font-family: Arial, sans-serif;
       margin: 0;
-      background: #f4f4f4;
+      padding: 0;
+      background: #f2f2f2;
     }
 
-    header {
-      background-color: #ffcc00;
-      padding: 1rem;
-      text-align: center;
+    .navbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: #fdd835;
+      padding: 10px 20px;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
     }
 
-    h1 {
+    .navbar h1 {
       margin: 0;
-      font-size: 2rem;
+      font-size: 20px;
     }
 
-    .produits {
+    .hamburger {
+      font-size: 24px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      display: none;
+    }
+
+    .container {
+      padding: 20px;
+      max-width: 1000px;
+      margin: auto;
+    }
+
+    .products {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 1rem;
-      padding: 2rem;
+      grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
+      gap: 15px;
     }
 
-    .carte {
-      background: white;
-      border-radius: 8px;
-      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
-      padding: 1rem;
+    .product {
+      background: #fff;
+      padding: 10px;
+      border-radius: 10px;
+      box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
       text-align: center;
     }
 
-    .carte img {
-      max-width: 100%;
-      height: 150px;
+    .product img {
+      width: 80px;
+      height: 80px;
       object-fit: cover;
       border-radius: 8px;
+      margin-bottom: 8px;
     }
 
-    .carte h2 {
-      font-size: 1.1rem;
-      margin: 0.5rem 0;
-    }
-
-    .carte p {
+    .product-title {
       font-weight: bold;
-      color: #333;
+      margin: 5px 0;
     }
 
-    .carte button {
-      padding: 0.5rem 1rem;
-      background-color: #ffcc00;
+    .btn {
+      padding: 8px 16px;
+      background-color: #fdd835;
+      color: #000;
       border: none;
-      border-radius: 4px;
+      border-radius: 5px;
       cursor: pointer;
-      font-weight: bold;
+      margin-top: 5px;
+    }
+    .btn:hover{
+      background-color: #ad8d0c;
     }
 
-    .carte button:hover {
-      background-color: #e6b800;
+    .cart {
+      margin-top: 30px;
+      background: #fff;
+      padding: 15px;
+      border-radius: 10px;
+      box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
+      text-align: center;
+    }
+
+    .popup {
+      display: none;
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background-color: rgba(0, 0, 0, 0.6);
+      justify-content: center;
+      align-items: center;
+      animation: fadeIn 0.3s ease;
+    }
+
+    .popup-content {
+      background-color: #fff;
+      padding: 20px;
+      border-radius: 10px;
+      text-align: center;
+      width: 90%;
+      max-width: 350px;
+      animation: slideUp 0.3s ease;
+    }
+
+    .popup-content img {
+      width: 80px;
+      margin-bottom: 10px;
+    }
+
+    .popup-content input[type="password"] {
+      padding: 10px;
+      width: 80%;
+      margin: 10px 0;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+
+    .popup-content button {
+      margin: 5px;
+      padding: 8px 16px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .valider {
+      background-color: #4caf50;
+      color: white;
+    }
+
+    .annuler {
+      background-color: #f44336;
+      color: white;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    @keyframes slideUp {
+      from { transform: translateY(50px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+
+    @media (max-width: 768px) {
+      .hamburger {
+        display: block;
+      }
     }
   </style>
 </head>
 <body>
-  <header>
-    <h1>Boutique MTN</h1>
-  </header>
 
-  <section class="produits">
-    <div class="carte">
-      <img src="images/creme.jpg" alt="Crème éclaircissante">
-      <h2>Crème éclaircissante</h2>
-      <p>Prix : 3 000 FCFA</p>
-      <button onclick="ajouterAuPanier('Crème éclaircissante', 3000)">Ajouter au panier</button>
+  <!-- Barre de navigation -->
+  <div class="navbar">
+    <h1>🛍️ VENTE EN LIGNE</h1>
+    <button class="hamburger" onclick="alert('Menu ouvert (à personnaliser)')">☰</button>
+  </div>
+
+  <div class="container">
+    <h2>🛒 Acheter vos accessoire via INTERNET grace à vos COMPTE MOBILE MONEY</h2>
+
+    <div class="products">
+      <div class="product">
+        <img src="https://images-na.ssl-images-amazon.com/images/I/61VwJL-aCJL.jpg" alt="Écouteurs">
+        <span class="product-title">Écouteurs Bluetooth</span>
+        <span>4 500 FCFA</span>
+        <button class="btn" onclick="ajouterAuPanier(4500)">Ajouter</button>
+      </div>
+      <div class="product">
+        <img src="https://m.media-amazon.com/images/I/518fCQow4AL._UF894,1000_QL80_.jpg" alt="Power Bank">
+        <span class="product-title">Batterie Externe</span>
+        <span>8 000 FCFA</span>
+        <button class="btn" onclick="ajouterAuPanier(8000)">Ajouter</button>
+      </div>
+      <div class="product">
+        <img src="https://s2.octika.com/85887-new_product_size/ikaly-solaire-metal-noir-homme-s352c2.jpg" alt="Lunettes">
+        <span class="product-title">Lunettes de soleil</span>
+        <span>3 200 FCFA</span>
+        <button class="btn" onclick="ajouterAuPanier(3200)">Ajouter</button>
+      </div>
+      <div class="product">
+        <img src="https://www.bracelets-tendances.fr/wp-content/uploads/2022/11/bracelet-homme-cuir-cinq-rangs-marron-fermoir-acier-argent-quintus.jpg" alt="Bracelet">
+        <span class="product-title">Bracelet cuir</span>
+        <span>2 000 FCFA</span>
+        <button class="btn" onclick="ajouterAuPanier(2000)">Ajouter</button>
+      </div>
+      <div class="product">
+        <img src="istockphoto-160992043-612x612.jpg" alt="Crème">
+        <span class="product-title">Crème Visage</span>
+        <span>2 800 FCFA</span>
+        <button class="btn" onclick="ajouterAuPanier(2800)">Ajouter</button>
+      </div>
+      <div class="product">
+        <img src="photo-1701291927826-c7775869d822.jpg" alt="Parfum">
+        <span class="product-title">Parfum de poche</span>
+        <span>3 000 FCFA</span>
+        <button class="btn" onclick="ajouterAuPanier(3000)">Ajouter</button>
+      </div>
+      <div class="product">
+        <img src="" alt="Casquette">
+        <span class="product-title">Casquette unisexe</span>
+        <span>2 500 FCFA</span>
+        <button class="btn" onclick="ajouterAuPanier(2500)">Ajouter</button>
+      </div>
+      <div class="product">
+        <img src="Leaving Facebook.jpg" alt="T-shirt">
+        <span class="product-title">T-shirt stylé</span>
+        <span>3 500 FCFA</span>
+        <button class="btn" onclick="ajouterAuPanier(3500)">Ajouter</button>
+      </div>
+      <div class="product">
+        <img src="cable-photo-usb-vers-usb-rapide-cable-de-donnees-u.jpg" alt="Câble USB">
+        <span class="product-title">Câble USB Rapide</span>
+        <span>1 200 FCFA</span>
+        <button class="btn" onclick="ajouterAuPanier(1200)">Ajouter</button>
+      </div>
+      <div class="product">
+        <img src="61JlfJ0XzAL.jpg" alt="Support voiture">
+        <span class="product-title">Support Téléphone Auto</span>
+        <span>2 000 FCFA</span>
+        <button class="btn" onclick="ajouterAuPanier(2000)">Ajouter</button>
+      </div>
     </div>
 
-    <div class="carte">
-      <img src="images/parfum.jpg" alt="Parfum pour homme">
-      <h2>Parfum pour homme</h2>
-      <p>Prix : 10 000 FCFA</p>
-      <button onclick="ajouterAuPanier('Parfum pour homme', 10000)">Ajouter au panier</button>
+    <div class="cart">
+      <h3>Total : <span id="total">0 FCFA</span></h3>
+      <button class="btn" onclick="ouvrirPopup()">Payer avec MTN</button>
     </div>
+  </div>
 
-    <div class="carte">
-      <img src="images/tshirt.jpg" alt="T-shirt noir">
-      <h2>T-shirt noir</h2>
-      <p>Prix : 7 000 FCFA</p>
-      <button onclick="ajouterAuPanier('T-shirt noir', 7000)">Ajouter au panier</button>
+  <!-- Popup Paiement -->
+  <div class="popup" id="popup">
+    <div class="popup-content">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/d/dd/MTN_logo.png" alt="Logo MTN">
+      <p>Saisissez votre code PIN Mobile Money :</p>
+      <input type="password" id="codePin" placeholder="****">
+      <div>
+        <button class="valider" onclick="validerPaiement()">Valider</button>
+        <button class="annuler" onclick="fermerPopup()">Annuler</button>
+      </div>
     </div>
-
-    <div class="carte">
-      <img src="images/cable.jpg" alt="Câble USB rapide">
-      <h2>Câble USB rapide</h2>
-      <p>Prix : 2 000 FCFA</p>
-      <button onclick="ajouterAuPanier('Câble USB rapide', 2000)">Ajouter au panier</button>
-    </div>
-
-    <div class="carte">
-      <img src="images/support.jpg" alt="Support voiture">
-      <h2>Support voiture</h2>
-      <p>Prix : 2 500 FCFA</p>
-      <button onclick="ajouterAuPanier('Support voiture', 2500)">Ajouter au panier</button>
-    </div>
-  </section>
+  </div>
 
   <script>
-    function ajouterAuPanier(nom, prix) {
-      alert(nom + " ajouté au panier pour " + prix + " FCFA.");
+    let total = 0;
+
+    function ajouterAuPanier(prix) {
+      total += prix;
+      document.getElementById("total").innerText = total.toLocaleString('fr-FR') + " FCFA";
+    }
+
+    function ouvrirPopup() {
+      document.getElementById("popup").style.display = "flex";
+    }
+
+    function fermerPopup() {
+      document.getElementById("popup").style.display = "none";
+    }
+
+    function validerPaiement() {
+      const code = document.getElementById("codePin").value;
+      if (code.length >= 4) {
+        alert("✅ Paiement réussi. Merci pour votre achat !");
+        total = 0;
+        document.getElementById("total").innerText = "0 FCFA";
+        fermerPopup();
+      } else {
+        alert("❌ Code PIN invalide.");
+      }
     }
   </script>
 </body>
